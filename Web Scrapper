@@ -1,0 +1,30 @@
+import requests
+from bs4 import BeautifulSoup
+
+def extract_headlines(url):
+    # Send a GET request to the URL
+    response = requests.get(url)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the HTML content using BeautifulSoup
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Find the elements containing news headlines
+        headlines = soup.find_all('h2', class_='headline')
+        
+        # Extract and print the headlines
+        for headline in headlines:
+            print(headline.text.strip())
+    else:
+        print("Failed to retrieve content. Status code:", response.status_code)
+
+def main():
+    # URL of the website to extract news headlines from
+    url = 'https://example.com/news'
+    
+    # Call the function to extract headlines
+    extract_headlines(url)
+
+if __name__ == "__main__":
+    main()
